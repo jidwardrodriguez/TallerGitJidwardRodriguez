@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor de Números a Letras</title>
+</head>
+<body>
+    <h1>Traductor de Números a Letras</h1>
+    <input type="number" id="numero" placeholder="Ingresa un número">
+    <button onclick="traducir()">Traducir</button>
+    <p id="resultado"></p>
+
+    <script>
+        function traducir() {
+            const numero = document.getElementById('numero').value;
+            const letras = numeroALetras(numero);
+            document.getElementById('resultado').innerText = letras;
+        }
+
+        function numeroALetras(num) {
+            const unidades = ['CERO', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
+            const decenas = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISEIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
+            const decenas2 = ['', '', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
+            const centenas = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+            
+            if (num == 0) return 'CERO';
+            if (num == 100) return 'CIEN';
+            if (num < 10) return unidades[num];
+            if (num < 20) return decenas[num - 10];
+            if (num < 100) return decenas2[Math.floor(num / 10)] + (num % 10 !== 0 ? ' Y ' + unidades[num % 10] : '');
+            if (num < 1000) return centenas[Math.floor(num / 100)] + (num % 100 !== 0 ? ' ' + numeroALetras(num % 100) : '');
+
+            if (num < 1000000) {
+                if (num < 2000) return 'MIL ' + (num % 1000 !== 0 ? numeroALetras(num % 1000) : '');
+                if (num < 1000000) return numeroALetras(Math.floor(num / 1000)) + ' MIL' + (num % 1000 !== 0 ? ' ' + numeroALetras(num % 1000) : '');
+            }
+
+            if (num == 1000000) return 'UN MILLÓN';
+
+            return 'Número fuera de rango';
+        }
+    </script>
+</body>
+</html>
