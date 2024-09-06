@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traductor de Números a Letras</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
 </head>
 <body>
-    <h1>Traductor de Números a Letras</h1>
+    <h2>Traductor de Números a Letras</h2>
     <input type="number" id="numero" placeholder="Ingresa un número">
-    <button onclick="traducir()">Traducir</button>
+    <button onclick="traducir()">Traducir a español</button>
+    <button onclick="traducirIngles()">Traducir a Inglés</button>
     <p id="resultado"></p>
-
+    <p id="result"></p>
     <script>
         function traducir() {
             const numero = document.getElementById('numero').value;
@@ -19,28 +21,35 @@
             document.getElementById('resultado').innerText = letras;
         }
 
+        function traducirIngles() {
+            const numero = document.getElementById('numero').value;
+            const letrasIngles = numberToWords.toWords(numero);
+            document.getElementById('result').innerText = letrasIngles;
+        }
+
         function numeroALetras(num) {
-            const unidades = ['CERO', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
-            const decenas = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISEIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
-            const decenas2 = ['', '', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
-            const centenas = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+            const unidades = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+            const decenas = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve'];
+            const decenas2 = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+            const centenas = ['', 'ciento', 'dosciento', 'trecientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
             
-            if (num == 0) return 'CERO';
-            if (num == 100) return 'CIEN';
+            if (num == 0) return 'cero';
+            if (num == 100) return 'cien';
             if (num < 10) return unidades[num];
             if (num < 20) return decenas[num - 10];
-            if (num < 100) return decenas2[Math.floor(num / 10)] + (num % 10 !== 0 ? ' Y ' + unidades[num % 10] : '');
+            if (num < 100) return decenas2[Math.floor(num / 10)] + (num % 10 !== 0 ? ' y ' + unidades[num % 10] : '');
             if (num < 1000) return centenas[Math.floor(num / 100)] + (num % 100 !== 0 ? ' ' + numeroALetras(num % 100) : '');
 
             if (num < 1000000) {
-                if (num < 2000) return 'MIL ' + (num % 1000 !== 0 ? numeroALetras(num % 1000) : '');
-                if (num < 1000000) return numeroALetras(Math.floor(num / 1000)) + ' MIL' + (num % 1000 !== 0 ? ' ' + numeroALetras(num % 1000) : '');
+                if (num < 2000) return 'mil ' + (num % 1000 !== 0 ? numeroALetras(num % 1000) : '');
+                if (num < 1000000) return numeroALetras(Math.floor(num / 1000)) + ' mil' + (num % 1000 !== 0 ? ' ' + numeroALetras(num % 1000) : '');
             }
 
-            if (num == 1000000) return 'UN MILLÓN';
+            if (num == 1000000) return 'un millón';
 
-            return 'Número fuera de rango';
+            return 'número fuera de rango';
         }
+
     </script>
 </body>
 </html>
